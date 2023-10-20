@@ -3,27 +3,33 @@ import Gim from "../gim.js";
 import black_hole from "./hole.js";
 
 class SpaceBody extends Gim {
-	radius: number;
-	private angle: number;
-	private distance: number;
+	radius: number
+	private angle: number
+	private distance: number
+	private speed = 1
 
 	constructor() {
-		const x = 50
-		const y = 50
+		super( undefined, undefined, randomColor() )
 
-		super( x, y, randomColor() )
-		this.radius = Math.floor( Math.random() * 20 ) + 5
+		this.radius = Math.floor( Math.random() * 10 ) + 5
 		this.angle = Math.floor( Math.random() * 359 )
 		this.distance = diagonal
+
+		this.x = black_hole.x + ( Math.cos( toRadian( this.angle ) ) * this.distance )
+		this.y = black_hole.y + ( Math.sin( toRadian( this.angle ) ) * this.distance )
 	}
 
 	draw( ctx:CanvasRenderingContext2D ):void {
-		this.distance--
+		this.distance -= this.speed
+		this.angle++
 
 		this.x = black_hole.x + ( Math.cos( toRadian( this.angle ) ) * this.distance )
 		this.y = black_hole.y + ( Math.sin( toRadian( this.angle ) ) * this.distance )
 
-		
+		let cx = Math.pow( this.x - black_hole.x , 2 )
+		let cy = Math.pow( this.y - black_hole.y , 2 )
+		let hip = Math.sqrt( cx + cy ) - this.radius/2 - black_hole.radius/2
+		if ( hip < black_hole.radius/2 ) generator.cut()
 
 		ctx.fillStyle = this.color
 		ctx.beginPath()
@@ -33,7 +39,7 @@ class SpaceBody extends Gim {
 }
 
 class Generator extends Gim {
-	bodies: SpaceBody[];
+	bodies: SpaceBody[]
 
 	constructor() {
 		super();
@@ -48,6 +54,9 @@ class Generator extends Gim {
 
 	cut():void {
 		this.bodies.shift()
+		this.bodies.push( new SpaceBody() )
+		this.bodies.push( new SpaceBody() )
+		black_hole.radius++
 	}
 }
 

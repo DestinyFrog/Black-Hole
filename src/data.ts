@@ -5,13 +5,9 @@ const vh = document.body.clientHeight
 export const WIDTH = vw
 export const HEIGHT = vh
 
-export const diagonal = WIDTH > HEIGHT ? WIDTH/2 : HEIGHT/2
+export const diagonal = Math.sqrt( Math.pow( WIDTH/2, 2 ) + Math.pow( HEIGHT/2, 2 ) )
 
-export function randomColor():string {
-	const rand = () => Math.floor( Math.random() * 255 )
-	return `rgb(${ rand() },${ rand() },${ rand() })`
-}
+const rand = () => Math.floor( Math.random() * 255 - 60 ) + 60
+export const randomColor = ():string => `rgb(${ rand() },${ rand() },${ rand() })`
 
-export function toRadian( deg:number ):number {
-	return ( Math.PI / 180 ) * deg
-}
+export const toRadian = ( deg:number ):number => ( Math.PI / 180 ) * deg
