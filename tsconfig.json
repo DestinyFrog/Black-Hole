@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+		"experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "target": "ESNext",
+        "outDir": "dist",
+		"removeComments": true,
+		"lib": [
+			"DOM",
+			"ES2015"
+		]
+    },
+	"include": [
+		"src/**/*.ts"
+	],
+	"exclude": [
+		"node_modules"
+	]
+}
